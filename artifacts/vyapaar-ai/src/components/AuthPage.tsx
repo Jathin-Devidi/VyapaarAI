@@ -237,8 +237,8 @@ export function AuthPage({ mode, onBack, onToggleMode, signedOut }: AuthPageProp
 
   const isSignUp = mode === 'signup';
   const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
-  const isValidSignupPhone = /^\d{10}$/.test(normalizeIndianPhone(signupPhone));
-  const isValidLoginPhone = /^\d{10}$/.test(normalizeIndianPhone(loginPhone));
+  const isValidSignupPhone = /^\d{10}$/.test(normalizePhone(signupPhone));
+  const isValidLoginPhone = /^\d{10}$/.test(normalizePhone(loginPhone));
   const isValidLoginEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(loginEmail.trim());
 
   useEffect(() => {
@@ -278,7 +278,7 @@ export function AuthPage({ mode, onBack, onToggleMode, signedOut }: AuthPageProp
     setNotice(opts.noticeMessage);
 
     if (opts.prefillPhone) {
-      const cleanPhone = normalizeIndianPhone(opts.prefillPhone);
+      const cleanPhone = normalizePhone(opts.prefillPhone);
       lastSentLoginPhoneRef.current = '';
       setLoginPhone(cleanPhone);
       setSignInMethod('phone');
@@ -348,7 +348,7 @@ export function AuthPage({ mode, onBack, onToggleMode, signedOut }: AuthPageProp
 
   // ─── SIGN-UP: Inline Mobile OTP Handlers ────────────────────────────────────
   const triggerSendPhoneOtp = async (targetPhone = signupPhone) => {
-    const clean = normalizeIndianPhone(targetPhone);
+    const clean = normalizePhone(targetPhone);
     if (!/^\d{10}$/.test(clean) || phoneOtpLoading) return;
 
     setPhoneOtpError(null);
@@ -460,7 +460,7 @@ export function AuthPage({ mode, onBack, onToggleMode, signedOut }: AuthPageProp
 
   // ─── SIGN-IN: Mobile OTP Handlers ───────────────────────────────────────────
   const triggerRequestLoginOtp = async (targetPhone = loginPhone) => {
-    const clean = normalizeIndianPhone(targetPhone);
+    const clean = normalizePhone(targetPhone);
     if (!/^\d{10}$/.test(clean) || loginOtpLoading) return;
 
     setError(null);
@@ -487,7 +487,7 @@ export function AuthPage({ mode, onBack, onToggleMode, signedOut }: AuthPageProp
   // Auto-send login OTP when 10 digits are entered on Sign-In
   useEffect(() => {
     if (isSignUp || signInMethod !== 'phone') return;
-    const clean = normalizeIndianPhone(loginPhone);
+    const clean = normalizePhone(loginPhone);
     if (clean.length === 10 && lastSentLoginPhoneRef.current !== clean && !loginOtpLoading) {
       void triggerRequestLoginOtp(clean);
     }
@@ -581,7 +581,7 @@ export function AuthPage({ mode, onBack, onToggleMode, signedOut }: AuthPageProp
 
   const switchToSignupWithIdentifier = () => {
     if (signInMethod === 'phone') {
-      const clean = normalizeIndianPhone(loginPhone);
+      const clean = normalizePhone(loginPhone);
       if (clean) setSignupPhone(clean);
     } else if (loginEmail.trim()) {
       setEmail(loginEmail.trim().toLowerCase());
