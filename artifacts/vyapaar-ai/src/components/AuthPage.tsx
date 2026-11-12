@@ -22,9 +22,16 @@ import {
 import { useGoogleLogin } from '@react-oauth/google';
 import {
   useAuth,
-  normalizeIndianPhone,
   type RegisteredAccountPreview,
 } from '../auth/AuthContext';
+
+// Simple phone normalizer (fallback if the exported helper is unavailable)
+const normalizePhone = (rawPhone: string): string => {
+  const digits = rawPhone.replace(/\D/g, '');
+  if (digits.length === 12 && digits.startsWith('91')) return digits.slice(2);
+  if (digits.length === 11 && digits.startsWith('0')) return digits.slice(1);
+  return digits;
+};
 import heroShopkeeper from '@/assets/hero-shopkeeper.jpg';
 
 interface AuthPageProps {
