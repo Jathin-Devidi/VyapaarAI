@@ -17,7 +17,6 @@ import {
   FileText,
   Info,
   ShieldCheck,
-  Sparkles,
 } from 'lucide-react';
 import { useGoogleLogin } from '@react-oauth/google';
 import {
@@ -385,7 +384,7 @@ export function AuthPage({ mode, onBack, onToggleMode, signedOut }: AuthPageProp
 
   useEffect(() => {
     if (!isSignUp) return;
-    const clean = normalizeIndianPhone(signupPhone);
+    const clean = normalizePhone(signupPhone);
     if (clean.length === 10 && lastSentPhoneRef.current !== clean && !phoneOtpLoading) {
       void triggerSendPhoneOtp(clean);
     }
