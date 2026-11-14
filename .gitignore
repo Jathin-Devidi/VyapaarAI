@@ -47,3 +47,10 @@ Thumbs.db
 # Replit
 .cache/
 .local/
+
+# Environment Variables & Secrets
+.env
+.env.local
+.env.*.local
+.vyapaar-users.json
+
