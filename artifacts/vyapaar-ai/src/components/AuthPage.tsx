@@ -245,7 +245,17 @@ export function AuthPage({ mode, onBack, onToggleMode, signedOut }: AuthPageProp
     setErrorCode(undefined);
   }, [mode]);
 
-  // Countdown timers
+  // Auto-send email OTP when user types a valid email on Sign-Up
+  useEffect(() => {
+    if (!isSignUp) return;
+    const clean = email.trim().toLowerCase();
+    if (isValidEmail && lastSentEmailRef.current !== clean && !emailOtpLoading && !emailVerified) {
+      const timer = setTimeout(() => {
+        void triggerSendEmailOtp(clean);
+      }, 600);
+      return () => clearTimeout(timer);
+    }
+  }, [email, isValidEmail, isSignUp, emailOtpLoading, emailVerified]);
   useEffect(() => {
     if (
       emailResendTimer <= 0 &&
@@ -559,6 +569,18 @@ export function AuthPage({ mode, onBack, onToggleMode, signedOut }: AuthPageProp
       void executeVerifyEmailLogin(emailLoginOtp);
     }
   }, [emailLoginOtp, emailLoginOtpSent, isSignUp, signInMethod]);
+
+  // Auto-send email OTP when user types a valid email on Sign-In
+  useEffect(() => {
+    if (isSignUp || signInMethod !== 'email') return;
+    const clean = loginEmail.trim().toLowerCase();
+    if (isValidLoginEmail && !emailLoginOtpLoading && !emailLoginOtpSent) {
+      const timer = setTimeout(() => {
+        void triggerRequestEmailLoginOtp(clean);
+      }, 600);
+      return () => clearTimeout(timer);
+    }
+  }, [loginEmail, isValidLoginEmail, isSignUp, signInMethod, emailLoginOtpLoading, emailLoginOtpSent]);
 
   const handleVerifyLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
