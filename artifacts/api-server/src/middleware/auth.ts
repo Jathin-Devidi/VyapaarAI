@@ -2,39 +2,61 @@ import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { db, usersTable } from "@workspace/db";
 import { eq } from "drizzle-orm";
+import { memoryAuthStore } from "../lib/memoryAuthStore";
 
-const JWT_SECRET = process.env.JWT_SECRET || "fallback_secret_for_hackathon";
+export function getJwtSecret(): string {
+  const secret = process.env.JWT_SECRET;
+  if (process.env.NODE_ENV === "production" && !secret) {
+    throw new Error("JWT_SECRET environment variable must be set in production.");
+  }
+  return secret || "fallback_secret_for_hackathon";
+}
 
 // Add user to Request object typing
 declare global {
   namespace Express {
     interface Request {
-      user?: any; // You can strongly type this later to match the User model
+      user?: any;
     }
   }
 }
 
-export const authenticate = async (req: Request, res: Response, next: NextFunction) => {
+export const authenticate = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
   try {
-    const token = req.cookies.accessToken;
+    const token = req.cookies.accessToken || req.cookies.vyapaar_session;
 
     if (!token) {
-      return res.status(401).json({ message: "Authentication required" });
+      res.status(401).json({ message: "Authentication required" });
+      return;
     }
 
-    const payload = jwt.verify(token, JWT_SECRET) as any;
+    const payload = jwt.verify(token, getJwtSecret()) as any;
 
-    const user = await db.query.usersTable.findFirst({
-      where: eq(usersTable.id, payload.userId)
-    });
+    let user: any = memoryAuthStore.findById(payload.userId);
+    if (!user && process.env.DATABASE_URL) {
+      try {
+        user = await db.query.usersTable.findFirst({
+          where: eq(usersTable.id, payload.userId),
+        });
+      } catch {
+        // Database unreachable; rely on memoryAuthStore
+      }
+    }
 
     if (!user || !user.isActive) {
-      return res.status(401).json({ message: "Invalid user session" });
+      res.status(401).json({ message: "Invalid user session" });
+      return;
     }
 
     req.user = user;
     next();
-  } catch (error) {
-    return res.status(401).json({ message: "Invalid or expired session" });
+    return;
+  } catch {
+    res.status(401).json({ message: "Invalid or expired session" });
+    return;
   }
 };
