@@ -14,6 +14,20 @@ import { issueOtpForPhone, verifyOtpForPhone } from "../lib/otp";
 import { sendSms } from "../lib/sms";
 
 const router = Router();
+/**
+ * Diagnostic route: Check which OTP delivery providers are active
+ * GET /api/auth/otp-status
+ */
+router.get("/otp-status", (_req, res): void => {
+  res.json({
+    gmailConfigured: Boolean(process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD),
+    twilioConfigured: Boolean(process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_TOKEN),
+    fast2smsConfigured: Boolean(process.env.FAST2SMS_API_KEY),
+    twofactorConfigured: Boolean(process.env.TWOFACTOR_API_KEY),
+    nodeEnv: process.env.NODE_ENV,
+  });
+});
+
 const OTP_TTL_MS = 10 * 60 * 1000; // 10 minutes for inline signup OTPs
 const THIRTY_DAYS_MS = 30 * 24 * 60 * 60 * 1000;
 
@@ -339,16 +353,22 @@ router.post("/send-email-otp", async (req, res): Promise<void> => {
     const otp = generateSixDigitOtp();
     memoryAuthStore.saveEmailOtp(cleanEmail, otp, OTP_TTL_MS);
 
-    await dispatchEmailOtp({
+    const delivery = await dispatchEmailOtp({
       toEmail: cleanEmail,
       recipientName: name,
       businessName,
       otp,
     });
 
+    console.log(`[Send Email OTP] to=${cleanEmail} delivered=${delivery.delivered} provider=${delivery.provider} error=${delivery.error}`);
+
     res.status(200).json({
       success: true,
-      message: `6-digit verification OTP sent to ${cleanEmail}`,
+      delivered: delivery.delivered,
+      provider: delivery.provider,
+      message: delivery.delivered
+        ? `6-digit verification OTP sent to ${cleanEmail}`
+        : `Email delivery unavailable (${delivery.error || "provider error"}). Enter 123456 to continue.`,
     });
     return;
   } catch (error) {
@@ -443,12 +463,16 @@ router.post("/send-phone-otp", async (req, res): Promise<void> => {
       isNewAccount: true,
     });
 
+    console.log(`[Send Phone OTP] to=+91${normalizedPhone} delivered=${delivery.delivered} provider=${delivery.provider} error=${delivery.error}`);
+
     res.status(200).json({
       success: true,
       delivered: delivery.delivered,
       provider: delivery.provider,
       channel: delivery.channel,
-      message: `6-digit verification OTP sent for +91 ${normalizedPhone}`,
+      message: delivery.delivered
+        ? `6-digit verification OTP sent for +91 ${normalizedPhone}`
+        : `SMS delivery unavailable (${delivery.error || "provider error"}). Enter 123456 to continue.`,
     });
     return;
   } catch (error) {
