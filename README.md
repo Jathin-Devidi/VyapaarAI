@@ -171,8 +171,6 @@ To deploy:
 * **Jathin Devidi**
 * **Ayush Devidi**
 * **Jashwanth Chary**
-* **Sumanth Repala**
-* **Saicharan Rai**
 
 ---
 
