@@ -1,568 +1,181 @@
-# 🚀 VyapaarAI
+# 🚀 VyapaarAI (ArthOS AI)
 
-> ### India's First AI-Powered Autonomous Context-Aware Business Operating System for Micro-Merchants
+> ### India's First Autonomous, Context-Aware Business Operating System for Micro-Merchants & Kirana Stores
 
 <p align="center">
-Building the Future of Business Digitization for India's MSMEs and Micro-Merchants.
+  <img src="https://img.shields.io/badge/React-19-blue?logo=react" alt="React 19" />
+  <img src="https://img.shields.io/badge/TypeScript-5.9-blue?logo=typescript" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/Vite-7-purple?logo=vite" alt="Vite 7" />
+  <img src="https://img.shields.io/badge/TailwindCSS-v4-38B2AC?logo=tailwind-css" alt="Tailwind CSS v4" />
+  <img src="https://img.shields.io/badge/Node.js-Express%205-green?logo=node.js" alt="Node.js Express 5" />
+  <img src="https://img.shields.io/badge/PostgreSQL-Drizzle%20ORM-blue?logo=postgresql" alt="PostgreSQL" />
+  <img src="https://img.shields.io/badge/Languages-12%20Indian%20Languages-orange" alt="12 Indian Languages" />
+  <img src="https://img.shields.io/badge/License-MIT-green" alt="MIT License" />
 </p>
 
 ---
 
-## 🏆 Hackathon 2026 Submission
+## 🌟 Overview & Problem Statement
 
-**Theme:** Agentic AI & Intelligent Systems
+Across India, over **13 million micro-merchants and Kirana stores** power the neighborhood retail economy. Yet, the vast majority remain constrained by:
+* **Manual Paper Bookkeeping (*Bahi-Khata*)**: Lost slips, uncollected customer credit (*Udhaar*), and calculation errors.
+* **Dead Stock & Stockouts**: Inability to forecast product demand based on local weather, seasons, and regional festivals.
+* **Complex Digital Software**: Existing enterprise ERPs or POS tools are English-first, desktop-bound, and too complex for busy shop counters.
 
-VyapaarAI (ArthOS AI) is an AI-powered autonomous Business Operating System designed to empower India's micro-merchants, Kirana stores, retailers, and MSMEs with intelligent decision-making capabilities.
-
-Unlike traditional business management software, VyapaarAI acts as an intelligent AI Business Partner capable of understanding:
-
-* Inventory
-* Finance
-* Customer Behaviour
-* Weather Conditions
-* Seasonal Trends
-* Festivals
-* Local Events
-* Business Analytics
-* Profit Optimization
-* Demand Forecasting
-* Marketing Automation
-* Multilingual Voice Interactions
-
-Our mission is simple:
-
-> **"Democratizing Business Intelligence for Every Merchant in India."**
+**VyapaarAI** reimagines the Kirana store workflow by serving as an **always-on, voice-first digital partner**. Shopkeepers can talk in their regional mother tongue, bill items by voice, automate friendly WhatsApp payment reminders, predict stock depletion, and monitor store profitability in real time.
 
 ---
 
-## ❓ Problem Statement
+## 🛠️ Complete Technology Stack
 
-Millions of micro-merchants across India still rely on:
+### Frontend Application (`@workspace/vyapaar-ai`)
+* **React 19 & TypeScript**: Component-driven UI with end-to-end type safety.
+* **Vite 7**: Ultra-fast bundler with Hot Module Replacement (HMR).
+* **Tailwind CSS v4 + Radix UI Primitives**: Indian aesthetic design palette (`saffron`, `marigold`, `paper`, `ink`) with accessible headless UI primitives.
+* **Wouter**: Ultralight client-side router (~1.5 KB) optimized for budget mobile devices over low-bandwidth cellular networks.
+* **TanStack React Query v5**: Server-state synchronization, background caching, and optimistic UI updates.
+* **Framer Motion**: Smooth 60fps gesture animations, drawer transitions, and responsive statistical widgets.
+* **Recharts**: Responsive SVG charts for revenue trends, inventory velocity, and weather impact curves.
+* **Web Speech Recognition API**: Native voice billing in Hindi, Telugu, Tamil, and other regional accents.
+* **Custom i18n Engine**: Zero-overhead context supporting **12 Indian Languages** (Hindi, Telugu, Tamil, Marathi, Bengali, Gujarati, Kannada, Punjabi, Malayalam, Odia, Assamese, English).
+* **Google OAuth 2.0 (`@react-oauth/google`)**: One-tap merchant onboarding.
 
-* Manual inventory tracking
-* Traditional bookkeeping
-* Reactive decision-making
-* Fragmented digital tools
-* Limited access to business intelligence
-* Language barriers in adopting technology
+### Backend & Middleware (`@workspace/api-server`)
+* **Node.js (ESM) + Express.js 5**: Event-driven high-throughput API gateway.
+* **esbuild**: Sub-second bundle compiler outputting clean production ESM artifacts.
+* **Dual-Engine Authentication**:
+  - Stateless HTTP-only JWT session cookies with 30-day "Remember Me" persistence.
+  - Multi-tier OTP delivery pipeline (Twilio SMS + Fast2SMS + Native TLS Gmail SMTP relay + Offline/Dev bypass).
+* **Pino + Pino-HTTP**: High-performance JSON logger.
 
-Current solutions solve only one problem at a time.
-
-Businesses today need:
-
-* Inventory software
-* Billing software
-* Marketing tools
-* Analytics dashboards
-* CRM platforms
-* Financial management systems
-
-This creates complexity and increases operational costs.
-
----
-
-## 💡 Our Solution
-
-VyapaarAI brings everything together through an:
-
-> ## AI-Powered Autonomous Business Operating System
-
-Instead of using five different applications, merchants receive one intelligent platform that can:
-
-* Understand their business.
-* Predict demand.
-* Optimize inventory.
-* Generate business insights.
-* Forecast profits.
-* Automate workflows.
-* Communicate in regional languages.
-* Recommend business decisions autonomously.
-
-Think of it as:
-
-> ### "Hiring an entire AI-powered business team inside one application."
+### Database & Storage (`@workspace/db`)
+* **PostgreSQL (Render Postgres / Neon / Supabase)**: Relational ACID database ensuring strict consistency for billing, stock, and credit ledgers.
+* **Drizzle ORM**: Zero-overhead TypeScript-native query builder and schema definitions.
+* **Drizzle-Zod**: Schema synchronization validating incoming HTTP bodies against database models.
+* **In-Memory & Persistent JSON Fallback**: Offline-resilient storage mode ensuring the POS counter never halts even during upstream database cold-starts.
 
 ---
 
 ## ✨ Key Features
 
-### Autonomous AI Agents
-
-The platform consists of multiple intelligent AI agents.
-
-#### Inventory AI Agent
-
-* Smart Inventory Management
-* Low Stock Detection
-* Dead Stock Detection
-* Demand Forecasting
-* Inventory Health Analysis
-* Reorder Recommendations
-* Profit Optimization
-
-#### Finance AI Agent
-
-* Daily Reports
-* Weekly Reports
-* Monthly Reports
-* Profit Analysis
-* Cash Flow Forecasting
-* Expense Tracking
-* Revenue Forecasting
-
-#### Marketing AI Agent
-
-* Smart Offer Generation
-* Festival Campaigns
-* WhatsApp Promotions
-* Social Media Captions
-* Product Advertisements
-* Customer Engagement Automation
-
-#### Customer AI Agent
-
-* Customer Segmentation
-* Loyalty Analysis
-* Personalized Recommendations
-* Customer Retention Strategies
-* Customer Behaviour Analytics
-
-#### Supplier AI Agent
-
-* Procurement Intelligence
-* Supplier Comparisons
-* Cost Optimization
-* Smart Purchasing Recommendations
-
-#### Business Advisor AI Agent
-
-Merchants can simply ask:
-
-* What should I stock tomorrow?
-* Which products are causing losses?
-* What products should I avoid purchasing?
-* How can I increase profits?
-* Which products should I promote?
-* What is my expected revenue next week?
+| Feature | Description |
+|---|---|
+| 🎙️ **Voice-First POS Billing** | Shopkeeper speaks naturally (*"2 packet Maggi aur 1 litre Amul doodh"*); items, quantities, and pricing are auto-added to the invoice in real time. |
+| 📊 **Real-time Bahi-Khata (Udhaar)** | Ledger tracking customer credits, repayment timelines, credit trust scores, and outstanding dues. |
+| 💬 **Automated WhatsApp Follow-ups** | One-tap friendly credit collection messages with embedded UPI payment links sent via WhatsApp. |
+| 📈 **Predictive Demand & Reordering** | Heuristic stock depletion forecasting based on sales velocity, weather forecast, and festival calendar. |
+| 🌦️ **Weather & Festival AI Intelligence** | Automatically correlates sunny/rainy days and upcoming festivals (Diwali, Eid, Sankranti) to recommend optimal procurement. |
+| 🩺 **Kirana Health Index** | Evaluates store performance across 4 vital pillars: Cash Flow, Inventory Turnover, Udhaar Collection Rate, and Margin Efficiency. |
+| 🔐 **Multi-Channel OTP Verification** | Frictionless sign-up and sign-in with instant inline 6-digit phone and email OTP verification. |
 
 ---
 
-## 🌦️ Weather Intelligence Engine
-
-VyapaarAI understands:
-
-* Rain
-* Summer
-* Winter
-* Humidity
-* Heat Waves
-* Seasonal Changes
-* Local Weather Conditions
-
-### Example
-
-#### Tomorrow: Heavy Rainfall
-
-AI Recommendation:
+## 🏗️ Project Architecture & Monorepo Structure
 
 ```text
-Tea Sales       +35%
-Milk Sales      +25%
-Bread Sales     +20%
-Ice Cream       -70%
-
-Recommended Purchases:
-
-- 50 Tea Packets
-- 30 Milk Packets
-- 20 Bread Packets
-
-Projected Profit:
-
-₹4250
-```
-
-The AI automatically predicts:
-
-* Demand
-* Revenue
-* Inventory Requirements
-* Business Impact
-
----
-
-## 🎉 Festival Intelligence
-
-The AI understands:
-
-* Diwali
-* Sankranti
-* Pongal
-* Ugadi
-* Holi
-* Ramzan
-* Christmas
-* New Year
-* Republic Day
-* Independence Day
-
-Automatically generates:
-
-* Festival Offers
-* Promotions
-* Inventory Suggestions
-* Customer Campaigns
-* Revenue Predictions
-
----
-
-## 🎙️ Voice AI Assistant
-
-Merchants can interact naturally using voice.
-
-### Examples
-
-```text
-What should I stock tomorrow?
-
-Show today's profit.
-
-Generate today's offers.
-
-Which products are causing losses?
-```
-
-Supported Languages:
-
-* English
-* Telugu
-* Hindi
-* Tamil
-* Kannada
-* Malayalam
-* Marathi
-* Gujarati
-* Bengali
-* Punjabi
-* Urdu
-* Odia
-
----
-
-## 🌐 Complete Multilingual Support
-
-Changing the application language changes EVERYTHING.
-
-Including:
-
-* Dashboard
-* Navigation
-* Reports
-* Charts
-* AI Agents
-* Voice Assistant
-* Notifications
-* Business Recommendations
-* Marketing Campaigns
-* WhatsApp Messages
-* PDFs
-* Analytics
-* Forecast Reports
-
-### Example
-
-If Telugu is selected:
-
-```text
-Merchant:
-
-రేపు నేను ఏమి కొనాలి?
-
-AI:
-
-రేపు భారీ వర్షాలు పడే అవకాశం ఉంది.
-టీ మరియు పాలు అమ్మకాలు పెరిగే అవకాశం ఉంది.
-50 టీ ప్యాకెట్లు మరియు 30 పాల ప్యాకెట్లు కొనుగోలు చేయడం మంచిది.
-```
-
-The entire application behaves like a native Telugu business assistant.
-
----
-
-## 📈 Predictive Analytics
-
-AI performs:
-
-* Sales Forecasting
-* Profit Forecasting
-* Demand Forecasting
-* Customer Forecasting
-* Seasonal Analysis
-* Inventory Forecasting
-
-The prediction engine considers:
-
-* Historical Sales
-* Weather Conditions
-* Seasonal Trends
-* Festivals
-* Customer Behaviour
-* Local Events
-* Supplier Availability
-* Inventory Data
-
----
-
-## 🤖 Autonomous Workflows
-
-### Example Workflow
-
-```text
-Merchant:
-
-I sold 50 Milk packets today.
-
-↓
-
-Inventory Updated
-
-↓
-
-Weather Forecast Retrieved
-
-↓
-
-Festival Analysis Completed
-
-↓
-
-Demand Prediction Generated
-
-↓
-
-Profit Forecast Calculated
-
-↓
-
-Supplier Recommendations Generated
-
-↓
-
-Marketing Campaign Generated
-
-↓
-
-Inventory Suggestions Displayed
-
-↓
-
-Business Insights Generated
-
-↓
-
-Projected Revenue Calculated
-```
-
-No additional user input is required.
-
----
-
-## 📊 Advanced Dashboards
-
-The platform includes:
-
-* Business Health Dashboard
-* Inventory Dashboard
-* Finance Dashboard
-* Marketing Dashboard
-* Supplier Dashboard
-* Customer Analytics Dashboard
-* Weather Intelligence Dashboard
-* Demand Forecast Dashboard
-* Predictive Analytics Dashboard
-* Seasonal Trends Dashboard
-* AI Recommendation Dashboard
-
----
-
-## 🏅 Business Health Score
-
-The platform intelligently generates:
-
-```text
-Business Health Score
-
-Inventory Score:
-95/100
-
-Profit Score:
-94/100
-
-Customer Score:
-91/100
-
-Forecast Accuracy:
-96/100
-
-Marketing Score:
-93/100
-
-Overall Score:
-94/100
+VyapaarAI/
+├── artifacts/
+│   ├── api-server/             # Express 5 backend API service
+│   │   ├── src/
+│   │   │   ├── lib/            # SMS, OTP, and Memory stores
+│   │   │   ├── middleware/     # JWT authentication & session cookies
+│   │   │   └── routes/         # Auth, Inventory, Billing & Health endpoints
+│   │   └── build.mjs           # esbuild production bundler
+│   │
+│   └── vyapaar-ai/             # Vite + React 19 Frontend
+│       ├── src/
+│       │   ├── auth/           # AuthContext & Session management
+│       │   ├── components/     # POS, Dashboard, Analytics & Settings views
+│       │   ├── data/           # Business data models & fallback datasets
+│       │   └── i18n/           # 12 Indian regional language dictionaries
+│       └── vite.config.ts      # Vite configuration & dev proxy
+│
+├── lib/
+│   └── db/                     # Drizzle ORM PostgreSQL schema & migrations
+│
+├── .env.example                # Template for environment configuration
+├── pnpm-workspace.yaml         # Monorepo workspace configuration
+├── render.yaml                 # Infrastructure as Code for Render deployment
+└── package.json                # Root package configuration
 ```
 
 ---
 
-## 💬 WhatsApp Automation
+## 🚀 Quickstart & Local Setup
 
-Automatically generates:
+### 1. Prerequisites
+* **Node.js** v20.x or v22.x+
+* **pnpm** v10+ (`npm install -g pnpm`)
 
-* Festival Greetings
-* Offers
-* Promotions
-* Loyalty Messages
-* Customer Notifications
-* Payment Reminders
-
-Everything is generated in the merchant's selected language.
-
----
-
-## ⚙️ Technology Highlights
-
-* Autonomous AI Agents
-* Predictive Analytics
-* Weather Intelligence
-* Festival Intelligence
-* Multilingual Architecture
-* Voice AI
-* Context-Aware Recommendations
-* Real-Time Forecasting
-* Intelligent Automation
-* Scalable SaaS Architecture
-
----
-
-## 🏗️ System Architecture
-
-```text
-                     Merchant
-                         |
-                    Voice / Text
-                         |
-                    Frontend UI
-                         |
-                   API Layer
-                         |
-                  AI Orchestrator
-                         |
-     ------------------------------------------------
-     |              |             |                  |
-Inventory AI     Finance AI    Marketing AI      Customer AI
-     |              |             |                  |
-Supplier AI ---- Business Advisor ---- Prediction Engine
-                         |
-                    Weather APIs
-                         |
-                 Festival Intelligence
-                         |
-                  Analytics Engine
-                         |
-                    Database Layer
-                         |
-                Autonomous Recommendations
-                         |
-                     Dashboards
+### 2. Clone the Repository
+```bash
+git clone https://github.com/Jathin-Devidi/VyapaarAI.git
+cd VyapaarAI
 ```
 
----
+### 3. Install Dependencies
+```bash
+pnpm install
+```
 
-## 🎯 Why VyapaarAI?
+### 4. Configure Environment Variables
+Copy the sample environment file:
+```bash
+cp .env.example .env
+```
+Open `.env` and configure your credentials (or test with built-in development defaults):
+```env
+PORT=10000
+VITE_PORT=25694
+JWT_SECRET=your_jwt_secret_here
 
-We are NOT building:
+# Email OTP (Optional - Gmail App Password)
+GMAIL_USER=your_email@gmail.com
+GMAIL_APP_PASSWORD=your_16_char_password
 
-* Inventory Software
-* Accounting Software
-* CRM Software
-* Business Dashboard
-* AI Chatbot
+# SMS Gateway (Optional - Twilio or Fast2SMS)
+TWILIO_ACCOUNT_SID=
+TWILIO_AUTH_TOKEN=
+TWILIO_FROM_NUMBER=
+FAST2SMS_API_KEY=
+```
 
-We are building:
+### 5. Start Development Servers
+Run the full application (Frontend + Backend):
+```bash
+pnpm run dev
+```
+* **Frontend Application**: `http://localhost:25694`
+* **Backend API**: `http://localhost:10000`
 
-> ### India's First AI-Powered Autonomous Context-Aware Business Operating System for Micro-Merchants.
-
-VyapaarAI acts as:
-
-* Inventory Manager
-* Financial Advisor
-* Business Consultant
-* Marketing Manager
-* Supplier Expert
-* Customer Relationship Manager
-* Forecasting Engine
-* Voice Assistant
-
-inside one intelligent platform.
-
----
-
-## 🚀 Future Scope
-
-* UPI Integrations
-* ONDC Integrations
-* Supplier Ecosystem
-* Autonomous Procurement
-* AI Business Coach
-* Hyperlocal Demand Intelligence
-* Enterprise SaaS Platform
-* Multi-store Management
-* Offline-first Support
-* Advanced Analytics Platform
+*(Tip: In local and test modes, use universal verification code `123456` for instant OTP verification).*
 
 ---
 
-## 🏆 Hackathon Impact
+## 🌐 Production Deployment (Render)
 
-### Business Digitization
+The repository includes a ready-to-use `render.yaml` blueprint defining:
+1. **`vyapaar-api-server`**: Express Node.js web service running production builds.
+2. **`vyapaar-ai-frontend`**: Static Vite application with API route rewrites.
+3. **`vyapaar-postgres`**: Managed PostgreSQL database.
 
-VyapaarAI directly addresses:
-
-* MSME Digitization
-* Financial Inclusion
-* AI Adoption
-* Regional Language Accessibility
-* Autonomous Business Intelligence
-* Context-Aware Decision Making
-
-### Expected Impact
-
-* Reduced Inventory Losses
-* Increased Merchant Profits
-* Improved Business Decisions
-* Better Demand Forecasting
-* Accessible AI for Regional Language Users
-* Increased Productivity for Small Businesses
+To deploy:
+1. Connect your GitHub repository to [Render](https://render.com).
+2. Create a new **Blueprint** and select `render.yaml`.
+3. Add your production environment secrets under the service settings.
 
 ---
 
-## 👥 Team
+## 👥 Core Team (Quiet Launch)
 
-**Team Name:** Quiet Launch
-
-### Team Members
-
-* Jathin Devidi
-* Ayush Devidi
-* Jashwanth Chary
-* Sumanth Repala
-* Saicharan Rai
+* **Jathin Devidi**
+* **Ayush Devidi**
+* **Jashwanth Chary**
+* **Sumanth Repala**
+* **Saicharan Rai**
 
 ---
 
-## 🌟 Project Vision
+## 📄 License
 
-> "Imagine a Kirana Store Owner simply asking in Telugu, 'What should I stock tomorrow?' and receiving intelligent, context-aware recommendations based on weather, festivals, historical sales, and predictive analytics—all within seconds."
-
-That is the future we are building.
-
-> ### VyapaarAI – Your Autonomous AI Business Partner for the Future of Business Digitization.
+This project is licensed under the [MIT License](LICENSE).
